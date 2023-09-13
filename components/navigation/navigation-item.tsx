@@ -7,24 +7,24 @@ import { cn } from "@/lib/utils";
 import ActionTooltip from "@/components/ui/action.tooltip";
 
 interface NavigationItemProps {
-    id: string;
-    imageUrl: string;
-    name: string;
+  id: string;
+  imageUrl: string;
+  name: string;
 };
 
 export const NavigationItem = ({
-    id,
-    imageUrl,
-    name
+  id,
+  imageUrl,
+  name
 }: NavigationItemProps) => {
-    const params = useParams();
-    const router = useRouter();
+  const params = useParams();
+  const router = useRouter();
 
-    const onClick = () => {
-        router.push(`/servers/${id}`)
-    }
-    return (
-        <ActionTooltip
+  const onClick = () => {
+    router.push(`/servers/${id}`);
+  };
+  return (
+    <ActionTooltip
       side="right"
       align="center"
       label={name}
@@ -43,12 +43,14 @@ export const NavigationItem = ({
           params?.serverId === id && "bg-primary/10 text-primary rounded-[16px]"
         )}>
           <Image
+            blurDataURL={imageUrl}
             fill
             src={imageUrl}
+            sizes=""
             alt="Channel"
           />
         </div>
       </button>
     </ActionTooltip>
-    );
+  );
 };
