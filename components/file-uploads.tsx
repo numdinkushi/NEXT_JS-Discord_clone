@@ -19,11 +19,12 @@ const FileUpload = ({
 }: FileUploadProps) => {
 
   const fileType = value?.split(".").pop();
-  
+
   if (value && fileType !== "pdf") {
     return (
       <div className="relative h-20 w-20">
         <Image
+          blurDataURL={value}
           fill
           src={value}
           alt="Upload"
@@ -37,7 +38,7 @@ const FileUpload = ({
           <X className="h-4 w-4" />
         </button>
       </div>
-    )
+    );
   }
 
   return (
