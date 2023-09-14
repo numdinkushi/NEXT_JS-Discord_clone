@@ -48,10 +48,11 @@ const EditServerModal = () => {
 
     useEffect(() => {
         if (server) {
-            form.setValue('name', server.name);
-            form.setValue('imageUrl', server.imageUrl);
+          form.setValue("name", server.name);
+          form.setValue("imageUrl", server.imageUrl);
         }
-    }, [server, form]);
+      }, [server, form]);
+    
 
     const isLoading = form.formState.isSubmitting;
     const onSubmit = async (values: z.infer<typeof formSchema>) => {

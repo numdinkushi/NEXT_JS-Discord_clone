@@ -32,8 +32,8 @@ export default function RootLayout({
           >
             <ClientOnly>
               <ModalProvider />
+              {children}
             </ClientOnly>
-            {children}
           </ThemeProvider>
         </body>
       </html>
