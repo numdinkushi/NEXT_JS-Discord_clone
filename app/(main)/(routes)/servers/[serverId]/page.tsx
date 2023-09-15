@@ -38,7 +38,6 @@ const ServerIdPage = async ({
       }
     }
   });
-
   const initialChannel = server?.channels[0];
 
   if (initialChannel?.name !== "general") {
