@@ -6,13 +6,14 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import ChatHeader from "@/components/chat/chat-header";
+import ChatInput from "@/components/chat/chat-input";
 
 
 interface ChannelIdPageProps {
   params: {
     serverId: string;
     channelId: string;
-  }
+  };
 }
 
 const ChannelIdPage = async ({
@@ -45,8 +46,23 @@ const ChannelIdPage = async ({
   }
 
   return (
-    <div className="bg-white dark:bg-[#313338] flex-col h-full">
-      <ChatHeader name={channel.name} serverId={channel.serverId} type="channel"/>
+    <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+       <ChatHeader
+        name={channel.name}
+        serverId={channel.serverId}
+        type="channel"
+      />
+
+      <div className="flex-1">Future Messages</div>
+          <ChatInput
+            type="channel"
+            name={channel.name} 
+            apiUrl="/api/socket/messages"
+            query={{
+              channelId: modifiedChannelId,
+              serverId: channel.serverId,
+            }}
+          />
     </div>
   );
 };
