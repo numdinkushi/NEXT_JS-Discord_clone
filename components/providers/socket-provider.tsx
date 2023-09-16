@@ -1,5 +1,6 @@
 'use client';
 
+import axios from "axios";
 import {
     createContext,
     useContext,
@@ -34,6 +35,18 @@ export const SocketProvider = ({
             path: "/api/socket/io",
             addTrailingSlash: false
         });
+        // TODO: KUSHI -display network connection failure issues to users in case of poor connection for both clerk auth and socket io. 
+        //NOTE: socket.io was bye passed in middleware. check getCurrentProfile in lib folder. you could use that to find isssues with logged in
+        // console.log(2222, socketInstance);
+        // const abc = async () => {
+        //     try {
+        //          const res = await axios.get("https://clerk.example.com/v1/me");
+        //          console.log(333, res);
+        //      } catch (error) {
+        //          console.log(444, error.message);
+        //      }
+        // }
+        // abc();
         socketInstance.on("connect", () => {
             setIsConnected(true);
         });
@@ -49,7 +62,7 @@ export const SocketProvider = ({
         };
     }, []);
     return (
-        <SocketContext.Provider value={{socket, isConnected}}>
+        <SocketContext.Provider value={{ socket, isConnected }}>
             {children}
         </SocketContext.Provider>
     );
