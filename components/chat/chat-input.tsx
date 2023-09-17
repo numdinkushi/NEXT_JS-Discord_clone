@@ -13,8 +13,10 @@ import {
   FormItem
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus, Smile } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
+import EmojiPicker from "@/components/emoji-picker";
+import { useRouter } from "next/navigation";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -34,6 +36,7 @@ const ChatInput = ({
   type
 }: ChatInputProps) => {
   const { onOpen } = useModal();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,6 +55,9 @@ const ChatInput = ({
       });
 
       await axios.post(url, values);
+
+      form.reset();
+      router.refresh();
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +72,7 @@ const ChatInput = ({
             <FormItem>
               <FormControl>
                 <div className="relative p-4 pb-6">
+                  {/* TODO: KUSH Add a button by the side of emoji to send message along side the enter key */}
                   <button
                     type="button"
                     onClick={() => onOpen('messageFile', {apiUrl, query})}
@@ -79,7 +86,7 @@ const ChatInput = ({
                     disabled={isLoading}
                     className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200" />
                   <div className="absolute top-7 right-8">
-                    <Smile />
+                    <EmojiPicker onChange={(emoji:string) => field.onChange(`${field.value} ${emoji}`) } />
                   </div>
                 </div>
               </FormControl>
