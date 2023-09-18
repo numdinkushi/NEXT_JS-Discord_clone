@@ -4,7 +4,6 @@ import { db } from "./db";
 import { NextApiRequest } from "next";
 
 export const currentProfilePages =  async (req: NextApiRequest) => {
-    console.log(777, getAuth(req));
     const { userId } = getAuth(req);
 
     if (!userId) {

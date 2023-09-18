@@ -7,6 +7,7 @@ import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
 import ChatItem from "./chat-item";
 import { format } from "date-fns";
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
 const DATE_FORMAT = "d MMM yyy, HH:mm";
 
@@ -39,7 +40,11 @@ const ChatMessages = ({
   paramKey,
   paramValue
 }: ChatMessagesProps) => {
-  const queryKey = `chat:${chatId}`;
+
+  const addKey = `chat:${chatId}`
+  const queryKey = `chat:${chatId}:messages`;
+  const updateKey = `chat${chatId}:messages:update`
+
   const {
     data,
     fetchNextPage,
@@ -52,7 +57,9 @@ const ChatMessages = ({
     paramKey,
     paramValue
   });
-  console.log(555, data?.pages[0]['items'][0]['fileUrl']);
+
+  useChatSocket({queryKey, addKey, updateKey});
+
   if (status === 'loading') {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
