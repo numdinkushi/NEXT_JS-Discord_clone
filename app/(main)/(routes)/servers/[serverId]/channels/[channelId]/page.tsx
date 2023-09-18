@@ -9,6 +9,8 @@ import ChatHeader from "@/components/chat/chat-header";
 import ChatInput from "@/components/chat/chat-input";
 import ClientOnly from "@/components/ClientOnly";
 import ChatMessages from "@/components/chat/chat-messages";
+import { ChannelType } from "@prisma/client";
+import MediaRoom from "@/components/ui/media-room";
 
 
 interface ChannelIdPageProps {
@@ -54,32 +56,49 @@ const ChannelIdPage = async ({
         serverId={channel.serverId}
         type="channel"
       />
-
-      <ChatMessages
-      member={member}
-      name={channel.name}
-      chatId={modifiedChannelId}
-      type="channel"
-      apiUrl="/api/messages"
-      socketUrl="/api/socket/messages"
-      socketQuery={{
-        channelId: modifiedChannelId,
-        serverId: channel.serverId
-      }}
-      paramKey="channelId"
-      paramValue={modifiedChannelId}
-      />
-      <ClientOnly>
-        <ChatInput
-          type="channel"
-          name={channel.name}
-          apiUrl="/api/socket/messages"
-          query={{
-            channelId: modifiedChannelId,
-            serverId: channel.serverId,
-          }}
+      {channel.type === ChannelType.TEXT && (
+        <>
+          <ChatMessages
+            member={member}
+            name={channel.name}
+            chatId={modifiedChannelId}
+            type="channel"
+            apiUrl="/api/messages"
+            socketUrl="/api/socket/messages"
+            socketQuery={{
+              channelId: modifiedChannelId,
+              serverId: channel.serverId
+            }}
+            paramKey="channelId"
+            paramValue={modifiedChannelId}
+          />
+          <ClientOnly>
+            <ChatInput
+              type="channel"
+              name={channel.name}
+              apiUrl="/api/socket/messages"
+              query={{
+                channelId: modifiedChannelId,
+                serverId: channel.serverId,
+              }}
+            />
+          </ClientOnly>
+        </>
+      )}
+      {channel.type === ChannelType.AUDIO && (
+        <MediaRoom
+          chatId={channel.id}
+          video={false}
+          audio={true}
         />
-      </ClientOnly>
+      )}
+      {channel.type === ChannelType.VIDEO && (
+        <MediaRoom
+          chatId={channel.id}
+          video={true}
+          audio={true }
+        />
+      )}
     </div>
   );
 };
