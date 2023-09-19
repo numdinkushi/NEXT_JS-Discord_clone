@@ -41,11 +41,11 @@ const ServerSearch = ({
     setOpen(false);
 
     if (type === "member") {
-      return router.push(`/servers/${params?.serverId}/conversations/${id}`)
+      return router.push(`/servers/${params?.serverId}/conversations/${id}`);
     }
 
     if (type === "channel") {
-      return router.push(`/servers/${params?.serverId}/channels/${id}`)
+      return router.push(`/servers/${params?.serverId}/channels/${id}`);
     }
   };
   return (
@@ -55,8 +55,8 @@ const ServerSearch = ({
         <p className="font-semibold text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:hover:text-zinc-300 transition">
           Search
         </p>
-        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground ml-auto">
-          <span className="text-xs"> CMD(CTRL)</span> + K
+        <kbd className="hidden md:inline-flex pointer-events-none h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground ml-auto">
+          <span className=" text-xs"> CMD(CTRL)</span> + K
         </kbd>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
@@ -71,7 +71,7 @@ const ServerSearch = ({
               <CommandGroup key={index} heading={label}>
                 {data?.map(({ id, icon, name }, index) => {
                   return (
-                    <CommandItem key={index} onSelect={() => onClick({id, type})}>
+                    <CommandItem key={index} onSelect={() => onClick({ id, type })}>
                       {icon}
                       <span>{name}</span>
                     </CommandItem>);
