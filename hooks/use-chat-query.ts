@@ -42,7 +42,9 @@ export const useChatQuery = ({
         queryKey: [queryKey],
         queryFn: fetchMessages,
         getNextPageParam: (lastPage) => lastPage?.nextCursor,
-        refetchInterval: isConnected ? false : 1000
+        refetchInterval: 1000
+        // refetchInterval: isConnected ? false : 1000 
+        // the above line was commendted to fix time out error on production
     });
 
     return {
